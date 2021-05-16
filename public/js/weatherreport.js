@@ -1,6 +1,4 @@
 
-console.log("welcome to browser console");
-
                 var form = document.querySelector("#main_form");
                 var location = document.querySelector("#txtlocation");
 
