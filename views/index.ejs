@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <h1>Weather Report</h1>
+        
+           
+
+        <!-- <script src="/public/js/weatherreport.js" type="text/javascript"></script> -->
+       </head>
+        <body>
+            <form>  
+                <input placeholder="location">
+                <button>Submit</button>
+
+
+                <p id="pSuccess" style="color:green"></p>
+                <p id="pFailure" style="color:red"></p>
+            </form>
+            <script type="text/javascript">
+                
+                var weatherForm = document.querySelector("form");
+                var loc = document.querySelector("input");  
+                var par_success = document.querySelector("#pSuccess");
+                var par_failure = document.querySelector("#pFailure");
+
+                function clearMessages() {
+                    par_success.innerHTML ="";
+                    par_failure.innerHTML ="";
+                }
+                weatherForm.addEventListener("submit",(e)=>{
+                   e.preventDefault();
+                   clearMessages(); 
+                   if(loc.value == "") return par_failure.textContent="location should not be empty";
+                   par_success.innerHTML ="loading......";
+                   fetch("http://localhost:3000/weather?address="+loc.value).then((response)=>{
+                        response.json().then((data)=>{  
+                            clearMessages();  
+                            if(data.error){
+                                par_failure.textContent = data.error;                            
+                            }
+                            else{                 
+                                par_success.innerHTML = data.temperature+"<br>"+data.precip+"<br>"+data.place_name;  
+                            }
+                        }).catch((error)=>{
+                            clearMessages();
+                            par_failure.textContent = error;
+                            //console.log(error);
+                        })
+                   }).catch(error=>{
+                        clearMessages();
+                        par_failure.textContent = error;
+                        //console.log(error);
+                   }) 
+                })    
+            </script>
+        </body>
+</html>
