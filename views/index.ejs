@@ -31,7 +31,7 @@
                    clearMessages(); 
                    if(loc.value == "") return par_failure.textContent="location should not be empty";
                    par_success.innerHTML ="loading......";
-                   fetch("http://localhost:3000/weather?address="+loc.value).then((response)=>{
+                   fetch("/weather?address="+loc.value).then((response)=>{
                         response.json().then((data)=>{  
                             clearMessages();  
                             if(data.error){
